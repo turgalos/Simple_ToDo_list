@@ -18,25 +18,28 @@ add_button = sg.Button("ADD")
 list_box = sg.Listbox(values=functions.get_todos(), key="todos", enable_events=True, size=[45, 10])
 edit_button = sg.Button("EDIT")
 complete_button = sg.Button("COMPLETE")
-#complete_button = sg.Button(image_size=(100, 40),  image_source="complete.png", mouseover_colors="lightgray", tooltip="Complete", key="COMPLETE")
-
+clear_button = sg.Button("CLEAR LIST")
 exit_button = sg.Button("EXIT")
+
+col1 = sg.Column([[list_box]])
+col2 = sg.Column([[edit_button, complete_button], [clear_button]], element_justification='c')
 
 window = sg.Window('To-Do App',
                    layout=[[clock],
                            [empty_line],
                            [label],
                            [input_box, add_button],
-                           [list_box, edit_button, complete_button],
+                           [col1, col2],
                            [exit_button]],
                    font=('Helvetica', 20))
 while True:
     event, values = window.read(timeout=200)
     window["clock"].update(value=time.strftime("%d %b %Y %H:%M:%S"))
 
-    #print(1, event)
-    #print(2, values)
-    #print(3, values['todos']) #if exist
+    #uncomment to develop:
+    # print(1, event)
+    # print(2, values)
+    # print(3, values['todos']) #if exist
 
     match event:
         case "ADD":
@@ -70,13 +73,23 @@ while True:
             except IndexError:
                 sg.popup("Please select an item first", font=("Helvetica", 20))
 
-        case "EXIT":
-            break
+        case "CLEAR LIST":
+            todos = []
+            functions.write_todos(todos)
+            window['todos'].update('')
+            window['todo'].update('')
 
         case "todos":
-            window['todo'].update(value=values['todos'][0])
+            if values['todos']:
+                window['todo'].update(value=values['todos'][0])
+
+        case "EXIT":
+            break
 
         case sg.WIN_CLOSED:
             break
 
 window.close()
+
+#TODO:
+# - bardziej interaktywne poruszanie todosami - zmiana kolejności
