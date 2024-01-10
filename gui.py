@@ -34,9 +34,10 @@ while True:
     event, values = window.read(timeout=200)
     window["clock"].update(value=time.strftime("%d %b %Y %H:%M:%S"))
 
-    print(1, event)
-    print(2, values)
-    print(3, values['todos'])
+    #print(1, event)
+    #print(2, values)
+    #print(3, values['todos']) #if exist
+
     match event:
         case "ADD":
             todos = functions.get_todos()
