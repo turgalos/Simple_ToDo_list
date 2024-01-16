@@ -91,5 +91,3 @@ while True:
 
 window.close()
 
-#TODO:
-# - bardziej interaktywne poruszanie todosami - zmiana kolejności
