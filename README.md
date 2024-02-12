@@ -6,5 +6,5 @@ For development and everyday use.
 
 Building: 
 ```
-pyinstaller --onefile --windowed --clean gui.py
+pyinstaller --onefile --windowed --clean --icon=favicon.ico gui.py --name MyTodoApp
 ```
